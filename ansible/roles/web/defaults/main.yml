@@ -1,0 +1,13 @@
+web_docker_image: amasselot/mad-web
+web_docker_tag: latest
+
+web_user: ubuntu
+web_group: ubuntu
+web_directory: "/home/{{ web_user }}/web"
+
+web_docker_private: false
+web_docker_username: ""
+web_docker_password: ""
+web_docker_registry: ""
+
+web_api_url: ""

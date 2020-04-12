@@ -1,0 +1,37 @@
+---
+
+- name: Create Directory for api
+  file:
+    state: directory
+    path: "{{ client_directory }}"
+    owner: "{{ client_user }}"
+    group: "{{ client_group }}"
+  tags: ["client_setup"]
+
+- name: Login to docker-Registry (if configured)
+  docker_login:
+    username: "{{ client_docker_username }}"
+    password: "{{ client_docker_password }}"
+    registry: "{{ client_docker_registry }}"
+  when: client_docker_private|bool
+  tags: ["client_deploy"]
+
+- name: Copy Docker-compose manifest
+  template:
+    src: templates/docker-compose.yml.j2
+    dest: "{{ client_directory }}/docker-compose.yml"
+  notify: restart docker-compose for project
+  tags: ["client_deploy"]
+
+- name: Run Docker-Compose for project
+  docker_compose:
+    project_src: "{{ client_directory }}"
+    state: present
+  tags: ["client_deploy"]
+
+- name: Logout From Docker Private registry
+  docker_login:
+    registry: "{{ client_docker_registry }}"
+    state: absent
+  when: client_docker_private|bool
+  tags: ["client_deploy"]

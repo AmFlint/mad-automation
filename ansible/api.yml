@@ -1,0 +1,11 @@
+---
+
+- name:  Install API
+  hosts: [tag_Name_api]
+  roles:
+    - { role: api, tags: ['api'] }
+
+- name: Install API Loadbalancer
+  hosts: [tag_Name_api_lb]
+  roles:
+    - { role: api-lb, tags: ['api_lb'] }

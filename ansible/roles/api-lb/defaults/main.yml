@@ -1,0 +1,6 @@
+api_lb_user: ubuntu
+api_lb_group: ubuntu
+
+api_lb_directory: "/home/{{ api_lb_user }}"
+
+api_lb_servers: []

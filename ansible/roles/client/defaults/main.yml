@@ -1,0 +1,14 @@
+
+client_docker_image: amasselot/mad-client
+client_docker_tag: latest
+
+client_user: ubuntu
+client_group: ubuntu
+client_directory: "/home/{{ client_user }}"
+
+client_docker_private: false
+client_docker_username: ""
+client_docker_password: ""
+client_docker_registry: ""
+
+client_api_url: ""

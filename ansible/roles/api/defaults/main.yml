@@ -1,0 +1,14 @@
+
+api_docker_image: amasselot/mad-api
+api_docker_tag: latest
+
+api_user: ubuntu
+api_group: ubuntu
+api_directory: "/home/{{ api_user }}"
+
+api_docker_private: false
+api_docker_username: ""
+api_docker_password: ""
+api_docker_registry: ""
+
+api_port: 3000

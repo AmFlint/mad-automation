@@ -1,0 +1,25 @@
+---
+
+- name: Create Directory for API LB
+  file:
+    state: directory
+    path: "{{ api_lb_directory }}"
+    owner: "{{ api_lb_user }}"
+    group: "{{ api_lb_group }}"
+  tags: ["api_lb_setup"]
+
+- name: Copy nginx configuration and docker-compose manifest
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: templates/docker-compose.yml.j2, dest: "{{ api_lb_directory }}/docker-compose.yml" }
+    - { src: templates/nginx.conf.j2, dest: "{{ api_lb_directory }}/nginx.conf" }
+  notify: restart docker-compose for project
+  tags: ["api_lb_deploy"]
+
+- name: Run Docker-Compose for project
+  docker_compose:
+    project_src: "{{ api_lb_directory }}"
+    state: present
+  tags: ["api_lb_deploy"]

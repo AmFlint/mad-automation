@@ -1,0 +1,6 @@
+version: '3'
+services:
+  api:
+    image: "{{ client_docker_image }}:{{ client_docker_tag }}"
+    environment:
+      API_URL: "{{ client_api_url }}"

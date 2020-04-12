@@ -1,0 +1,6 @@
+version: '3'
+services:
+  api:
+    image: "{{ web_docker_image }}:{{ web_docker_tag }}"
+    ports:
+      - 80:80

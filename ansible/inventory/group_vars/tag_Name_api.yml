@@ -1,0 +1,2 @@
+api_redis_host: api-redis.lkq1nk.0001.euw2.cache.amazonaws.com
+api_redis_port: 6379

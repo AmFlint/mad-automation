@@ -1,0 +1,17 @@
+- name: Run Application Playbook
+  hosts: all
+  roles:
+    - { role: common, tags: ["common"] }
+    - { role: geerlingguy.docker, tags: ["docker"] }
+
+- name: Install API
+  import_playbook: api.yml
+  tags: ['api']
+
+- name: Install Clients
+  import_playbook: client.yml
+  tags: ['client']
+
+- name: Install Web Console
+  import_playbook: web.yml
+  tags: ['web']

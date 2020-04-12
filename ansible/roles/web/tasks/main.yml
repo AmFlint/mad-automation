@@ -1,0 +1,37 @@
+---
+
+- name: Create Directory for web
+  file:
+    state: directory
+    path: "{{ web_directory }}"
+    owner: "{{ web_user }}"
+    group: "{{ web_group }}"
+  tags: ["web_setup"]
+
+- name: Login to docker-Registry (if configured)
+  docker_login:
+    username: "{{ web_docker_username }}"
+    password: "{{ web_docker_password }}"
+    registry: "{{ web_docker_registry }}"
+  when: web_docker_private|bool
+  tags: ["web_deploy"]
+
+- name: Copy Docker-compose manifest
+  template:
+    src: templates/docker-compose.yml.j2
+    dest: "{{ web_directory }}/docker-compose.yml"
+  notify: restart docker-compose for project
+  tags: ["web_deploy"]
+
+- name: Run Docker-Compose for project
+  docker_compose:
+    project_src: "{{ web_directory }}"
+    state: present
+  tags: ["web_deploy"]
+
+- name: Logout From Docker Private registry
+  docker_login:
+    registry: "{{ web_docker_registry }}"
+    state: absent
+  when: web_docker_private|bool
+  tags: ["web_deploy"]

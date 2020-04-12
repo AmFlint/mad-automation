@@ -1,0 +1,6 @@
+---
+
+- name:  Install API
+  hosts: [tag_Name_web]
+  roles:
+    - { role: web, tags: ['web'] }
